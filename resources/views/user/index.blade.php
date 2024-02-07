@@ -26,6 +26,13 @@
             border-radius: 50px;
         }
 
+        .centered-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
 
     </style>
 </head>
