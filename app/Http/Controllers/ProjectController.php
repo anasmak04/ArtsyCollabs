@@ -31,7 +31,15 @@ class ProjectController extends Controller
         $data = $projectRequest->all();
         $data['user_id'] = $userId;
 
-        Project::create($data);
+
+
+        $project = Project::create($data);
+
+
+        if (request()->hasFile('project_img')) {
+            $project->addMediaFromRequest('project_img')->toMediaCollection('images');
+        }
+
         return redirect()->route("project.index");
     }
 

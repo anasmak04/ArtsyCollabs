@@ -13,6 +13,6 @@ class PartnerSeeder extends Seeder
      */
     public function run(): void
     {
-        Partner::create(["name" => "cegidim" , "description" => "test", "project_id" => 1]);
+        Partner::create(["name" => "cegidim" , "description" => "test", "project_id" => 2]);
     }
 }

@@ -14,7 +14,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">Submit Your Project</h2>
 
-    <form action="{{route('project.store')}}" method="POST" class="needs-validation" novalidate>
+    <form action="{{route('project.store')}}" method="POST" class="needs-validation" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Name:</label>
@@ -22,6 +22,11 @@
             @error("name")
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
+        </div>
+
+
+        <div class="form-group">
+            <input type="file" name="project_img" id="">
         </div>
 
         <div class="form-group">

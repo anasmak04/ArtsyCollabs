@@ -133,33 +133,50 @@
                         </div>
                     </div>
                 </div>
-                <!-- Projects Section -->
-                <div class="row">
-                    @foreach($projects as $project)
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <div class="card-header">
-                                    {{ $project->name }}
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">{{ $project->description }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">Budget: ${{ $project->budget }}</small>
-                                        <small class="text-muted">By: {{ $project->user->name }}</small>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">Edit</button>
-                                    <form action="{{ route('project.destroy', ['project' => $project->id]) }}" method="post" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                    </form>
-                                </div>
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">Projects</div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Budget</th>
+                                        <th>Owner</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($projects as $project)
+                                        <tr>
+                                            <td>{{ $project->name }}</td>
+                                            <td>{{ $project->description }}</td>
+                                            <td>${{ $project->budget }}</td>
+                                            <td>{{ $project->user->name }}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">Edit</button>
+                                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">show</button>
+                                                <form action="{{ route('project.destroy', ['project' => $project->id]) }}" method="post" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </div>

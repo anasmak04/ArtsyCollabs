@@ -159,32 +159,40 @@
 
 
 
-                <div class="row">
-                    @foreach($partners as $partner)
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <div class="card-header text-center">
-                                    {{ $partner->name }}
+                <div class="main-content">
+                    <div class="container-fluid mx-auto">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="mt-4">Project Dashboard</h1>
+                                <!-- Dashboard cards remain as provided -->
+                                <!-- Partner list in table format -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($partners as $partner)
+                                            <tr>
+                                                <td>{{ $partner->name }}</td>
+                                                <td>{{ $partner->description }}</td>
+                                                <td>
+                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#editRoleModal-{{ $partner->id }}">Edit</button>
+                                                    <form action="{{ route('partner.destroy', ['partner' => $partner->id]) }}" method="post" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
-                                @if($partner->getFirstMediaUrl('images'))
-                                    <img src="{{ $partner->getFirstMediaUrl('images') }}" class="card-img-top" alt="Partner Image">
-                                @endif
-                                <div class="card-body">
-                                    <p class="card-text">{{ $partner->description }}</p>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <button class="btn btn-warning" data-toggle="modal" data-target="#editRoleModal-{{ $partner->id }}">Edit</button>
-                                    <form action="{{ route('partner.destroy', ['partner' => $partner->id]) }}" method="post" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
                 @foreach($partners as $partner)
                     <div class="modal fade" id="editRoleModal-{{$partner->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog">
