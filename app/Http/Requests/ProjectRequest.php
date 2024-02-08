@@ -24,7 +24,7 @@ class ProjectRequest extends FormRequest
         return [
             "name" => "required" ,
             "description" => "required",
-            "budget "=> "required"
+            "budget"=> "required"
         ];
     }
 }

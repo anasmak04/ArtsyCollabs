@@ -1,0 +1,63 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #f4f7fc;
+    margin-top: 0;
+}
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #343a40;
+    overflow-x: hidden;
+    padding-top: 20px;
+    transition: 0.5s;
+}
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #ddd;
+    display: block;
+    transition: 0.3s;
+}
+.sidebar a:hover {
+    color: #fff;
+    background-color: #007bff;
+}
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.5s;
+}
+@media (max-width: 767px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {float: left;}
+    .main-content {margin-left: 0;}
+}
+@media (min-width: 768px) {
+    .sidebar {width: 250px; height: 100vh; position: fixed;}
+    .main-content {margin-left: 250px;}
+}
+.profile-info {
+    text-align: center;
+    padding: 10px;
+}
+.profile-info img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+.card-header {
+    background-color: #007bff;
+    color: #fff;
+}
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+}

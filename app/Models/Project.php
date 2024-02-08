@@ -9,11 +9,27 @@ class Project extends Model
 {
     use HasFactory;
 
-    public function partners()
+    /**
+     * The model's fillable properties.
+     *
+     * @var array
+     */
+    protected $fillable = ["name", "description", "budget" , "user_id"];
+
+    /**
+     * Get the user that owns the project.
+     */
+    public function user()
     {
-        $this->hasMany(Partner::class);
+        return $this->belongsTo(User::class);
     }
 
-
-    protected $fillable = ["name","description","budget"];
+    /**
+     * Get the partners associated with the project.
+     */
+    public function partners()
+    {
+        // Corrected to include a return statement
+        return $this->hasMany(Partner::class);
+    }
 }

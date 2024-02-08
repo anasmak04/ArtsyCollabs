@@ -4,48 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
+use App\Models\Partner;
 use App\Models\Project;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-    //
-
     public function index(Project $project)
     {
-        $projects = $project::all();
-        return view("Projects.index",compact("projects"));
+        $projects = Project::with("user")->get();
+        $userstatistic = User::count();
+        $projectstatistic = Project::count();
+        $partnerstatistic = Partner::count();
+        return view("Project.index", compact("projects", "userstatistic", "projectstatistic", "partnerstatistic"));
     }
-
-
 
     public function create()
     {
         return view("Project.create");
     }
 
-    public function store(Project $project , ProjectRequest $projectRequest)
+    public function store(ProjectRequest $projectRequest)
     {
-        $project->create($projectRequest->all());
-        return redirect()->route("projects.index");
+        $userId = Auth::id();
+        $data = $projectRequest->all();
+        $data['user_id'] = $userId;
+
+        Project::create($data);
+        return redirect()->route("project.index");
     }
 
     public function edit(Project $project)
     {
-        return view("Projects.edit" , compact("project"));
+        return view("Project.edit", compact("project"));
     }
 
-    public function update(Project $project , ProjectRequest $projectRequest)
+    public function update(Project $project, ProjectRequest $projectRequest)
     {
         $project->update($projectRequest->all());
-        return redirect()->route("projects.index");
+        return redirect()->route("project.index");
     }
 
     public function destroy(Project $project)
     {
         $project->delete();
-        return redirect()->route("projects.index");
+        return redirect()->route("project.index");
     }
-
-
 }

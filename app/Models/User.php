@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,17 +11,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements HasMedia
 {
-
-    use HasApiTokens, HasFactory, Notifiable,InteractsWithMedia;
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
+    use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
     /**
-     * The attributes that are mass assignable.
+     * The model's fillable properties.
      *
      * @var array<int, string>
      */
@@ -31,7 +23,7 @@ class User extends Authenticatable implements HasMedia
         'email',
         'password',
         'role_id',
-        'status'
+        'status',
     ];
 
     /**
@@ -51,6 +43,21 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
+
+    /**
+     * Get the role associated with the user.
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Get the projects associated with the user.
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

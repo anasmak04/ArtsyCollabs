@@ -1,3 +1,19 @@
-<div>
-    <!-- The best way to take care of the future is to take care of the present moment. - Thich Nhat Hanh -->
-</div>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form action="{{route("partner.store")}}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <input type="file" name="image" id="">
+    <input type="text" name="name" placeholder="name" id="">
+    <input type="text" name="description" placeholder="name" id="">
+    <button type="submit">save</button>
+</form>
+</body>
+</html>
