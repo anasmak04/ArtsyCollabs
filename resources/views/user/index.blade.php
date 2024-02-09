@@ -103,6 +103,7 @@
 
 <div class="sidebar">
     <div class="profile-info">
+
         <img src="{{ Auth::user()->getFirstMediaUrl('images') }}" alt="Profile Image">
         <h5 style="color: #fff;">{{Auth::user()->name}}</h5>
     </div>

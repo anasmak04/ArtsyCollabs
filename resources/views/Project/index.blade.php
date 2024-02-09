@@ -9,21 +9,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #f4f7fc;
-            margin-top: 0;
+            font-family: 'Roboto', sans-serif;
         }
         .sidebar {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             height: 100%;
             width: 250px;
             position: fixed;
             z-index: 1;
             top: 0;
             left: 0;
-            background-color: #343a40;
-            overflow-x: hidden;
+            background-color: #2C3E50;            overflow-x: hidden;
             padding-top: 20px;
             transition: 0.5s;
         }
@@ -67,12 +67,32 @@
             height: 100px;
         }
         .card-header {
-            background-color: #007bff;
+            background-color: #18BC9C;
             color: #fff;
         }
         .card {
-            box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+            border: none; /* Remove default border */
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
+
+        .btn-outline-secondary {
+            border-color: #18BC9C;
+            color: #18BC9C;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #18BC9C;
+            color: #fff;
+        }
+
+        .btn-outline-danger {
+            border-color: #E74C3C;
+            color: #E74C3C;
+        }
+        .btn-outline-danger:hover {
+            background-color: #E74C3C;
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -141,6 +161,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th>avatar</th>
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Budget</th>
@@ -151,13 +172,14 @@
                                     <tbody>
                                     @foreach($projects as $project)
                                         <tr>
+                                            <td><img style="width: 60px" src="{{$project->getFirstMediaUrl("images")}}" alt=""></td>
                                             <td>{{ $project->name }}</td>
                                             <td>{{ $project->description }}</td>
                                             <td>${{ $project->budget }}</td>
                                             <td>{{ $project->user->name }}</td>
                                             <td>
                                                 <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">Edit</button>
-                                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">show</button>
+                                                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#showProjectModal-{{ $project->id }}">Show</button>
                                                 <form action="{{ route('project.destroy', ['project' => $project->id]) }}" method="post" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -216,6 +238,33 @@
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+@endforeach
+@foreach($projects as $project)
+    <div class="modal fade" id="showProjectModal-{{$project->id}}" tabindex="-1" aria-labelledby="showProjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Use modal-lg for a larger modal -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showProjectModalLabel">{{ $project->name }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Display the project image in a larger size -->
+                    <img src="{{$project->getFirstMediaUrl('images')}}" alt="Project Image" style="width: 100%; max-height: 400px; object-fit: cover;">
+                    <div class="mt-3"> <!-- Use margin-top (mt-3) to add some spacing between the image and the text content -->
+                        <p><strong>Description:</strong> {{ $project->description }}</p>
+                        <p><strong>Budget:</strong> ${{ $project->budget }}</p>
+                        <p><strong>Owner:</strong> {{ $project->user->name }}</p>
+                        <!-- Add more details as needed -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
