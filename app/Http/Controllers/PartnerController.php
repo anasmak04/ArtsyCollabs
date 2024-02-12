@@ -25,7 +25,10 @@ class PartnerController extends Controller
 
     public function create()
     {
-        return view("Partner.create");
+        $userstatistic = User::count();
+        $projectstatistic = Project::count();
+        $partnerstatistic = Partner::count();
+        return view("Partner.create", compact("userstatistic", "projectstatistic" , "partnerstatistic"));
     }
 
     public function store(Request $request)

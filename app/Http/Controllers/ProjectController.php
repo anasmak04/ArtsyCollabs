@@ -27,7 +27,11 @@ class ProjectController extends Controller
     {
         $partners = Partner::all();
         $users = User::all();
-        return view("Project.create", compact("partners" , "users"));
+        $projectstatistic = Project::count();
+        $partnerstatistic = Partner::count();
+        $userstatistic = User::count();
+
+        return view("Project.create", compact("partners" , "users", "projectstatistic","userstatistic" , "partnerstatistic"));
     }
 
     public function store(ProjectRequest $projectRequest)

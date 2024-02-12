@@ -81,58 +81,75 @@
                 <span>Dashboard</span></a>
         </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Interface
-        </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="http://127.0.0.1:8000/user" >
-                <span>users</span>
-            </a>
 
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Components:</h6>
+                    <a class="collapse-item" href="buttons.html">Buttons</a>
+                    <a class="collapse-item" href="cards.html">Cards</a>
+                </div>
+            </div>
         </li>
 
         <!-- Nav Item - Utilities Collapse Menu -->
         <li class="nav-item">
-            <a  class="nav-link collapsed" href="http://127.0.0.1:8000/partner" >
-                <span>partners</span>
-            </a>
 
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                 data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                </div>
+            </div>
         </li>
 
 
 
+        <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a href="http://127.0.0.1:8000/project" class="nav-link collapsed"  >
+            <a class="nav-link collapsed" href="http://127.0.0.1:8000/project" >
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Projects</span>
             </a>
-
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Login Screens:</h6>
+                    <a class="collapse-item" href="login.html">Login</a>
+                    <a class="collapse-item" href="register.html">Register</a>
+                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                    <div class="collapse-divider"></div>
+                    <h6 class="collapse-header">Other Pages:</h6>
+                    <a class="collapse-item" href="404.html">404 Page</a>
+                    <a class="collapse-item" href="blank.html">Blank Page</a>
+                </div>
+            </div>
         </li>
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+            <a class="nav-link" href="http://127.0.0.1:8000/partner">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
+                <span>partners</span></a>
         </li>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item">
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="http://127.0.0.1:8000/user">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
+                <span>users</span></a>
         </li>
 
 
 
 
     </ul>
+
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -453,6 +470,7 @@
                                         <td>{{ $partner->description }}</td>
                                         <td>
                                             <button class="btn btn-warning" data-toggle="modal" data-target="#editRoleModal-{{ $partner->id }}">Edit</button>
+                                            <a href="http://127.0.0.1:8000/partner/create" class="btn btn-warning">Add</a>
                                             <form action="{{ route('partner.destroy', ['partner' => $partner->id]) }}" method="post" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
