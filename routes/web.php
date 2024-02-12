@@ -28,6 +28,8 @@ Route::resource("/user", UserController::class);
 Route::resource('/project', ProjectController::class);
 Route::resource("/partner", PartnerController::class);
 Route::get('/user/statistics', [UserController::class, 'Statistic'])->name('user.statistics');
-Route::get('/', function () {
-    return view('welcome');
+Route::patch('/project/{project}/assign', [ProjectController::class, "assign"] )->name('project.assign');
+
+Route::get("/welcome", function (){
+    return view("welcome");
 });

@@ -16,7 +16,7 @@ class Partner extends Model implements HasMedia
 
     public function project()
     {
-        $this->belongsTo(Project::class, "partner_id");
+        $this->hasMany(Project::class);
     }
 
 

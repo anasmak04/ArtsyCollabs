@@ -6,7 +6,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <!-- Include Bootstrap CSS from a CDN -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -45,7 +44,22 @@
             @enderror
         </div>
 
-        <input type="hidden" name="user_id">
+
+        <select name="partner_id" id="partner_id">
+            <option value="">Select a Category</option>
+            @foreach($partners as $partner)
+                <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+            @endforeach
+        </select>
+
+
+        <select name="user_id" id="user_id">
+            <option value="">Select a Category</option>
+            @foreach($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+        </select>
+
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>

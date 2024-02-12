@@ -16,7 +16,7 @@ class Project extends Model implements HasMedia
      *
      * @var array
      */
-    protected $fillable = ["name", "description", "budget" , "user_id"];
+    protected $fillable = ["name", "description", "budget" , "user_id" , "partner_id"];
 
     /**
      * Get the user that owns the project.
@@ -29,9 +29,8 @@ class Project extends Model implements HasMedia
     /**
      * Get the partners associated with the project.
      */
-    public function partners()
+    public function partner()
     {
-        // Corrected to include a return statement
-        return $this->hasMany(Partner::class);
+        return $this->belongsTo(Partner::class , "partner_id");
     }
 }
