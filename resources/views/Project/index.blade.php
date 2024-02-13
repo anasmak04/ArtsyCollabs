@@ -117,18 +117,7 @@
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Projects</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Login Screens:</h6>
-                    <a class="collapse-item" href="login.html">Login</a>
-                    <a class="collapse-item" href="register.html">Register</a>
-                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Other Pages:</h6>
-                    <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
-                </div>
-            </div>
+
         </li>
 
         <!-- Nav Item - Charts -->
@@ -143,6 +132,13 @@
             <a class="nav-link" href="http://127.0.0.1:8000/user">
                 <i class="fas fa-fw fa-table"></i>
                 <span>users</span></a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/applications">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Requests</span></a>
         </li>
 
 
@@ -447,7 +443,6 @@
                     </div>
                 </div>
 
-                <!-- Content Row -->
 
                 <div class="row">
 
@@ -461,6 +456,7 @@
                                     <th>Description</th>
                                     <th>Budget</th>
                                     <th>Owner</th>
+                                    <th>approvement</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -469,8 +465,16 @@
                                         <td><img style="width: 60px" src="{{$project->getFirstMediaUrl("images")}}" alt=""></td>
                                         <td>{{ $project->name }}</td>
                                         <td>{{ $project->description }}</td>
-                                        <td>${{ $project->budget }}</td>
-                                        <td>{{ $project->user->name }}</td>
+                                        <td>{{ $project->budget }}</td>
+                                        <td>
+                                            @if(optional($project->user)->name)
+                                                {{ $project->user->name }}
+                                            @else
+                                               null
+                                            @endif
+                                        </td>
+                                        <td>{{ $project->is_approved }}</td>
+
                                         <td>
                                             <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">Edit</button>
                                             <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#showProjectModal-{{ $project->id }}">Show</button>
@@ -542,8 +546,11 @@
                                             <div class="mt-3"> <!-- Use margin-top (mt-3) to add some spacing between the image and the text content -->
                                                 <p><strong>Description:</strong> {{ $project->description }}</p>
                                                 <p><strong>Budget:</strong> ${{ $project->budget }}</p>
-                                                <p><strong>Owner:</strong> {{ $project->user->name }}</p>
-                                                <!-- Add more details as needed -->
+                                                <p><strong>Owner : </strong> @if(optional($project->user)->name)
+                                                        {{ $project->user->name }}
+                                                    @else
+                                                        null
+                                                    @endif</p>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

@@ -25,7 +25,7 @@ class ProjectRequest extends FormRequest
             "name" => "required" ,
             "description" => "required",
             "budget"=> "required",
-            "user_id"=> "required",
+            "user_id"=> "nullable",
             "partner_id"=> "required"
         ];
     }

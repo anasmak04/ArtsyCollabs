@@ -14,8 +14,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -119,18 +117,7 @@
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Projects</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Login Screens:</h6>
-                    <a class="collapse-item" href="login.html">Login</a>
-                    <a class="collapse-item" href="register.html">Register</a>
-                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                    <div class="collapse-divider"></div>
-                    <h6 class="collapse-header">Other Pages:</h6>
-                    <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
-                </div>
-            </div>
+
         </li>
 
         <!-- Nav Item - Charts -->
@@ -148,10 +135,16 @@
         </li>
 
 
+        <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/user">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Requests</span></a>
+        </li>
+
+
 
 
     </ul>
-
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -456,86 +449,93 @@
 
                     <div class="row container-fluid">
                         <div class="custom-table container-fluid">
-                            <form action="{{ route('project.store') }}" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
-                                @csrf
-                                <div class="form-group mb-3">
-                                    <label for="name">Name:</label>
-                                    <input type="text" class="form-control" name="name" id="name" required>
-                                    @error("name")
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Project Name</th>
+                                    <th>User Name</th>
+                                    <th>Approved</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($applications as $app)
+                                    <tr>
+                                        <td>{{$app->project->name}}</td>
+                                        <td>{{$app->user->name}}</td>
+                                        <td>{{$app->approved}}</td>
+                                        <td style="display: flex; gap:15px">
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#editRoleModal-{{ $app->id }}">Edit</button>
+                                            <form action="{{ route('applications.destroy', $app->id) }}" method="post" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                            @foreach($applications as $app)
+                                <div class="modal fade" id="editRoleModal-{{$app->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit Infos for {{$app->user->name}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <form action="{{ route('applications.update', $app->id) }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <div class="modal-body">
+
+                                                        <div class="mb-3">
+                                                            <input value="{{ $app->user_id }}" class="form-control form-control-lg" type="hidden" name="user_id" placeholder="Enter name" aria-label=".form-control-lg example">
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <input value="{{ $app->project_id }}" class="form-control form-control-lg" type="hidden" name="project_id" placeholder="Enter name" aria-label=".form-control-lg example">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input value="{{ $app->approved }}" class="form-control form-control-lg" type="text" name="approved" placeholder="Enter name" aria-label=".form-control-lg example">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="project_img">Project Image:</label>
-                                    <input type="file" class="form-control-file" name="project_img" id="project_img">
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="description">Description:</label>
-                                    <input type="text" class="form-control" name="description" id="description" required>
-                                    @error("description")
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="budget">Budget:</label>
-                                    <input type="number" class="form-control" name="budget" id="budget" required>
-                                    @error("budget")
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="partner_id">Partner:</label>
-                                    <select name="partner_id" id="partner_id" class="form-select">
-                                        <option value="">Select a Partner</option>
-                                        @foreach($partners as $partner)
-                                            <option value="{{ $partner->id }}">{{ $partner->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <label for="user_id">Assigned User:</label>
-                                    <select name="user_id" id="user_id" class="form-select">
-                                        <option value="">Select a User</option>
-                                        <option value="">No user</option>
-                                        @foreach($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endforeach
-                                    </select>
-
-                                </div>
-
-
-
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-
-
-
+                            @endforeach
                         </div>
-                    </div>
-
                 </div>
-
-            </div>
-
-
+                <!-- /.container-fluid -->
+                </div>
         </div>
-
+        <!-- End of Content Wrapper -->
     </div>
 
+
+
+    <!-- Bootstrap core JavaScript-->
     <script src="{{asset("jquery/jquery.min.js")}}"></script>
     <script src="{{asset("bootstrap/js/bootstrap.bundle.min.js")}}"></script>
+    <!-- Core plugin JavaScript-->
     <script src="{{asset("jquery-easing/jquery.easing.min.js")}}"></script>
+    <!-- Custom scripts for all pages-->
     <script src="{{asset("js/sb-admin-2.js")}}"></script>
+    <!-- Page level plugins -->
     <script src="{{asset("/chart.js/Chart.min.js")}}"></script>
+
+    <!-- Page level custom scripts -->
     <script src="{{asset("js/demo/chart-area-demo.js")}}"></script>
     <script src="{{asset("js/demo/chart-pie-demo.js")}}"></script>
-
 </div>
 </body>
 

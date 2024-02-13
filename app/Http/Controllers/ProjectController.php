@@ -8,6 +8,7 @@ use App\Http\Requests\updateProjectRequest;
 use App\Models\Partner;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -36,8 +37,6 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $projectRequest)
     {
-
-
         $data = $projectRequest->all();
         $project = Project::create($data);
         if (request()->hasFile('project_img')) {
@@ -45,9 +44,6 @@ class ProjectController extends Controller
         }
         return redirect()->route("project.index");
     }
-
-
-
 
 
     public function edit(Project $project)
@@ -77,6 +73,17 @@ class ProjectController extends Controller
         $project->save();
 
         return redirect()->route("project.index");
+    }
+
+
+    public function leave(Request $request, Project $project)
+    {
+        if ($project->user_id != auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        $project->user_id = null;
+        $project->save();
+        return redirect()->route("applications.index");
     }
 
 

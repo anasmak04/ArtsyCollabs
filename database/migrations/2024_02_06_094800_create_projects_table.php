@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("description");
             $table->integer("budget");
-            $table->foreignId("user_id")->constrained()->onDelete("cascade");
+            $table->foreignId("user_id")->nullable()->constrained()->onDelete("cascade");
             $table->foreignId("partner_id")->constrained()->onDelete("cascade");
             $table->timestamps();
         });

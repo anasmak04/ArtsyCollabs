@@ -16,7 +16,12 @@ class Project extends Model implements HasMedia
      *
      * @var array
      */
-    protected $fillable = ["name", "description", "budget" , "user_id" , "partner_id"];
+    protected $fillable = ["name", "description", "budget" ,  "user_id"  , "partner_id"];
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 
     /**
      * Get the user that owns the project.

@@ -145,6 +145,12 @@
                 <span>users</span></a>
         </li>
 
+        <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000/applications">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Requests</span></a>
+        </li>
+
 
 
 
