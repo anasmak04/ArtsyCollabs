@@ -24,14 +24,16 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::resource("/user", UserController::class);
-Route::resource('/project', ProjectController::class);
-Route::resource("/partner", PartnerController::class);
-Route::get('/user/statistics', [UserController::class, 'Statistic'])->name('user.statistics');
-Route::patch('/project/{project}/assign', [ProjectController::class, "assign"] )->name('project.assign');
-Route::resource("/", HomeController::class);
 
+
+
+Route::resource("/user", UserController::class)->middleware('role.redirect:admin');
+Route::resource('/project', ProjectController::class)->middleware('role.redirect:admin');
+Route::resource("/partner", PartnerController::class)->middleware('role.redirect:admin');
+Route::patch('/project/{project}/assign', [ProjectController::class, "assign"] )->name('project.assign');
+Route::resource("/applications", ProjectApplicationController::class)->only("update", "destroy", "index")->middleware('role.redirect:admin');
 Route::post('/projects/{project}/apply', [ProjectApplicationController::class , "store"])->name('projects.apply');
-Route::resource("/applications", ProjectApplicationController::class)->only("update", "destroy", "index");
 Route::post('/projects/{project}/leave', [ProjectController::class, 'leave'])->name('projects.leave');
+
+
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('role.redirect:artiste');

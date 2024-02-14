@@ -368,8 +368,8 @@
 
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    <a href="http://127.0.0.1:8000/partner/create" class="btn btn-success">Add</a>
+
                 </div>
 
                 <div class="row">
@@ -472,12 +472,11 @@
                                 </thead>
                                 @foreach($partners as $partner)
                                     <tr>
-                                        <td><img style="width: 50px" class="avatar" src="{{ Auth::user()->getFirstMediaUrl('images') }}" alt=""></td>
+                                        <td><img style="width: 50px" class="avatar" src="{{ $partner->getFirstMediaUrl('images') }}" alt=""></td>
                                         <td>{{ $partner->name }}</td>
                                         <td>{{ $partner->description }}</td>
                                         <td>
                                             <button class="btn btn-warning" data-toggle="modal" data-target="#editRoleModal-{{ $partner->id }}">Edit</button>
-                                            <a href="http://127.0.0.1:8000/partner/create" class="btn btn-warning">Add</a>
                                             <form action="{{ route('partner.destroy', ['partner' => $partner->id]) }}" method="post" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')

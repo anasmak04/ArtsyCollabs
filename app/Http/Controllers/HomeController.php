@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Partner;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,8 @@ class HomeController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return view('home.home', compact("projects"));
+        $partners = Partner::all();
+        return view('home.home', compact("projects", "partners"));
     }
 
 

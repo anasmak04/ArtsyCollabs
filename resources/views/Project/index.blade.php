@@ -356,8 +356,9 @@
 
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+
+                    <a href="http://127.0.0.1:8000/project/create" class="btn btn-sm btn-outline-success">Add</a>
+
                 </div>
 
                 <div class="row">
@@ -447,6 +448,7 @@
                 <div class="row">
 
                     <div class="row container-fluid">
+
                         <div class="custom-table container-fluid">
                             <table class="table">
                                 <thead>
@@ -456,7 +458,6 @@
                                     <th>Description</th>
                                     <th>Budget</th>
                                     <th>Owner</th>
-                                    <th>approvement</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -479,7 +480,6 @@
                                             <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editProjectModal-{{ $project->id }}">Edit</button>
                                             <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#showProjectModal-{{ $project->id }}">Show</button>
                                             <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#AssignProjectModal-{{ $project->id }}">Assign</button>
-                                            <a href="http://127.0.0.1:8000/project/create" class="btn btn-sm btn-outline-success">Add</a>
                                             <form action="{{ route('project.destroy', ['project' => $project->id]) }}" method="post" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
@@ -541,9 +541,8 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <!-- Display the project image in a larger size -->
                                             <img src="{{$project->getFirstMediaUrl('images')}}" alt="Project Image" style="width: 100%; max-height: 400px; object-fit: cover;">
-                                            <div class="mt-3"> <!-- Use margin-top (mt-3) to add some spacing between the image and the text content -->
+                                            <div class="mt-3">
                                                 <p><strong>Description:</strong> {{ $project->description }}</p>
                                                 <p><strong>Budget:</strong> ${{ $project->budget }}</p>
                                                 <p><strong>Owner : </strong> @if(optional($project->user)->name)
